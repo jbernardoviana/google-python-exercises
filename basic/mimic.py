@@ -63,16 +63,38 @@ def mimic_dict(filename):
   # if its not a key of mimic_dict, add it as a list
   # if it is, append it
 
-  for ix,word in enumerate(words):
-    if word not in mimic_dict:
-      next_word = words[(ix + 1) % len(words)]
-      mimic_dict[word] = [next_word]
+  # for ix,word in enumerate(words):
+  #   if word not in mimic_dict:
+  #     next_word = words[(ix + 1) % len(words)]
+  #     mimic_dict[word] = [next_word]
+  #   else:
+  #     next_word = words[(ix + 1) % len(words)]
+  #     mimic_dict[word].append(next_word)
+
+  #   # or
+  #   next_word = words[(ix + 1) % len(words)]
+  #   mimic_dict[word] = mimic_dict.get(word, []) + [next_word]
+
+  # return mimic_dict
+
+  # -- OR ---
+  prev = ''
+  for word in words:
+    if prev not in mimic_dict:
+      mimic_dict[prev] = [word]
     else:
-      next_word = words[(ix + 1) % len(words)]
-      mimic_dict[word].append(next_word)
+      mimic_dict[prev].append(word)
+    prev = word
 
   return mimic_dict
 
+  # -- OR ---
+  # prev = ''
+  # for word in words:
+  #   mimic_dict[prev] = mimic_dict.get(prev, []) + [word]
+  #   prev = word
+
+  # return mimic_dict
 
 def print_mimic(mimic_dict, word):
   """Given mimic dict and start word, prints 200 random words."""
@@ -93,7 +115,7 @@ def main():
     sys.exit(1)
 
   dict = mimic_dict(sys.argv[1])
-  if sys.argv[2]:
+  if len(sys.argv) > 2:
     print_mimic(dict, sys.argv[2])
   else:
     print_mimic(dict, '')
