@@ -26,6 +26,7 @@ def remove_adjacent(nums):
 
   for nr in nums:
     print n_list
+
     if len(n_list) == 0 or nr != n_list[-1]:
       n_list.append(nr)
 
